@@ -45,6 +45,12 @@ class TwilioConfigTest extends TestCase
         $this->assertEquals(getenv("TWILIO_NUMBER"), $this->config->getSenderNumber());
     }
 
+    public function testSetSenderNumberPlus()
+    {
+        $this->config->setSenderNumber(str_replace("+", "", getenv("TWILIO_NUMBER")));
+        $this->assertEquals(getenv("TWILIO_NUMBER"), $this->config->getSenderNumber());
+    }
+
     public function testCheckConfigException()
     {
         $this->expectException(InvalidTwilioConfigException::class);
