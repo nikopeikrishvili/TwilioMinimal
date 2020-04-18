@@ -34,6 +34,7 @@ class TwilioMinimal
      * @param string $text
      * @return bool
      * @throws UnableToSendMessageException
+     * @codeCoverageIgnore
      */
     public function send(string $receiver, string $text): bool
     {
@@ -45,6 +46,12 @@ class TwilioMinimal
         }
     }
 
+    /**
+     * Validate Guzzle response
+     * @param ResponseInterface $response
+     * @return bool
+     * @throws UnableToSendMessageException
+     */
     protected function validateResponse(ResponseInterface $response)
     {
         $result = $response->getBody()->getContents();
@@ -59,6 +66,7 @@ class TwilioMinimal
      * Get Guzzle Http Client
      * kind of Singleton implementation
      * @return GuzzleHttp\Client
+     * @codeCoverageIgnore
      */
     private function getClient()
     {
