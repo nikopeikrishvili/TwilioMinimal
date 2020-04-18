@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="TWILIO_VERSION" value="2010-04-01"/>
+        <env name="TWILIO_API_URL" value="https://api.twilio.com/"/>
+        <env name="TWILIO_NUMBER" value="+15005550006"/>
+        <env name="TWILIO_ERROR_NUMBER" value="+15005550001"/>
+        <env name="TWILIO_RECEIVER" value="+15005550006"/>
+        <env name="TWILIO_AUTH_TOKEN" value=""/>
+        <env name="TWILIO_SID" value=""/>
+    </php>
+</phpunit>
