@@ -2,6 +2,7 @@
 
 namespace NikoPeikrishvili\TwilioMinimal;
 
+use GuzzleHttp\Psr7\Response;
 use NikoPeikrishvili\TwilioMinimal\Exceptions\InvalidTextSizeException;
 use NikoPeikrishvili\TwilioMinimal\Exceptions\UnableToSendMessageException;
 use PHPUnit\Framework\TestCase;
@@ -33,10 +34,21 @@ class TwilioMinimalTest extends TestCase
         return $method->invokeArgs($object, $parameters);
     }
 
-    public function testSendSuccess()
+    public function testValidateResponseSuccess()
     {
-        $result = $this->twilioMinimal->send(getenv("TWILIO_RECEIVER"), "1234");
-        $this->assertTrue($result);
+        $string = json_encode(['status' => 'sent']);
+        $response = new Response(200, ['Content-type' => 'application/json', 'accept' => 'application/json'], $string);
+        $state = $this->invokeMethod($this->twilioMinimal, 'validateResponse', [$response]);
+        $this->assertTrue($state);
+    }
+
+    public function testValidateResponseFail()
+    {
+        $this->expectException(UnableToSendMessageException::class);
+        $this->expectExceptionMessage("failed error_message");
+        $string = json_encode(['status' => 'failed', 'error_message' => 'error_message']);
+        $response = new Response(200, ['Content-type' => 'application/json', 'accept' => 'application/json'], $string);
+        $state = $this->invokeMethod($this->twilioMinimal, 'validateResponse', [$response]);
     }
 
     public function testSendFail()

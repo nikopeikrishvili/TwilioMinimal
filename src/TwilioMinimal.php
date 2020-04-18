@@ -5,6 +5,7 @@ namespace NikoPeikrishvili\TwilioMinimal;
 use GuzzleHttp\Client;
 use NikoPeikrishvili\TwilioMinimal\Exceptions\InvalidTextSizeException;
 use NikoPeikrishvili\TwilioMinimal\Exceptions\UnableToSendMessageException;
+use Psr\Http\Message\ResponseInterface;
 
 class TwilioMinimal
 {
@@ -38,21 +39,26 @@ class TwilioMinimal
     {
         try {
             $response = $this->getClient()->post($this->getSmsSendUri(), $this->getParams($receiver, $text));
-            $result = $response->getBody()->getContents();
-            $object = json_decode($result);
-            if (in_array($object->status, $this->getSuccessfullySendCodes())) {
-                return true;
-            }
-            throw new UnableToSendMessageException($object->status . " " . $object->error_message);
+            return $this->validateResponse($response);
         } catch (\Throwable $exception) {
             throw new UnableToSendMessageException($exception->getMessage());
         }
     }
 
+    protected function validateResponse(ResponseInterface $response)
+    {
+        $result = $response->getBody()->getContents();
+        $object = json_decode($result);
+        if (in_array($object->status, $this->getSuccessfullySendCodes())) {
+            return true;
+        }
+        throw new UnableToSendMessageException($object->status . " " . $object->error_message);
+    }
+
     /**
      * Get Guzzle Http Client
      * kind of Singleton implementation
-     * @return Client|GuzzleHttp\Client
+     * @return GuzzleHttp\Client
      */
     private function getClient()
     {
@@ -106,7 +112,7 @@ class TwilioMinimal
      */
     private function normalizeNumber(string $phoneNumber): string
     {
-        if ($phoneNumber['0'] !== '+') {
+        if ('+' !== $phoneNumber['0']) {
             $phoneNumber = '+' . $phoneNumber;
         }
         return $phoneNumber;
