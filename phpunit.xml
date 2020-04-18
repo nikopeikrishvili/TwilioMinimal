@@ -27,7 +27,7 @@
         <env name="TWILIO_NUMBER" value="+15005550006"/>
         <env name="TWILIO_ERROR_NUMBER" value="+15005550001"/>
         <env name="TWILIO_RECEIVER" value="+15005550006"/>
-        <env name="TWILIO_AUTH_TOKEN" value=""/>
-        <env name="TWILIO_SID" value=""/>
+        <env name="TWILIO_AUTH_TOKEN" value="AUTH_TOKEN"/>
+        <env name="TWILIO_SID" value="SID"/>
     </php>
 </phpunit>
