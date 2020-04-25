@@ -1,6 +1,6 @@
 {
   "name": "nikopeikrishvili/twiliominimal",
-  "description": "Minimal package for just sending sms messages via Twilio",
+  "description": "Minimal package for only sending sms messages via Twilio",
   "type": "library",
   "require": {
     "guzzlehttp/guzzle": "^6.5",
