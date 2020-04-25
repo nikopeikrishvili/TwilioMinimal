@@ -2,7 +2,6 @@
   "name": "nikopeikrishvili/twiliominimal",
   "description": "Minimal package for just sending sms messages via Twilio",
   "type": "library",
-  "version": "1.0.3",
   "require": {
     "guzzlehttp/guzzle": "^6.5",
     "php": ">=7.0.0",
